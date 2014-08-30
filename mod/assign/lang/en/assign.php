@@ -114,6 +114,8 @@ $string['deleteallsubmissions'] = 'Delete all submissions';
 $string['deletepluginareyousure'] = 'Delete assignment plugin {$a}: are you sure?';
 $string['deletepluginareyousuremessage'] = 'You are about to completely delete the assignment plugin {$a}. This will completely delete everything in the database associated with this assignment plugin. Are you SURE you want to continue?';
 $string['deletingplugin'] = 'Deleting plugin {$a}.';
+$string['deletesubmissionforstudent'] = 'Delete submission for student: (id={$a->id}, fullname={$a->fullname}).';
+$string['deletesubmission'] = 'Delete submission';
 $string['description'] = 'Description';
 $string['downloadall'] = 'Download all submissions';
 $string['download all submissions'] = 'Download all submissions in a zip file.';
