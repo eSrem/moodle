@@ -1034,7 +1034,16 @@ class assign_grading_table extends table_sql implements renderable {
             $description = get_string('reverttodraftshort', 'assign');
             $actions[$url->out(false)] = $description;
         }
-
+        if($row->status == ASSIGN_SUBMISSION_STATUS_SUBMITTED){
+        	$url = new moodle_url('/mod/assign/view.php', array('id' => $this->assignment->get_course_module()->id,
+        			'userid'=>$row->id,
+        			'action'=>'deletesubmission',
+        			'sesskey'=>sesskey(),
+        			'page'=>$this->currpage));
+        	$description = get_string('deletesubmission','assign');
+        	$actions[$url->out(false)] = $description;
+        }
+		
         $ismanual = $this->assignment->get_instance()->attemptreopenmethod == ASSIGN_ATTEMPT_REOPEN_METHOD_MANUAL;
         $hassubmission = !empty($row->status);
         $notreopened = $hassubmission && $row->status != ASSIGN_SUBMISSION_STATUS_REOPENED;
