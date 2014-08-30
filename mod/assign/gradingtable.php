@@ -1093,7 +1093,7 @@ class assign_grading_table extends table_sql implements renderable {
                 $description
             );
         }
-        if($row->status == ASSIGN_SUBMISSION_STATUS_SUBMITTED) {
+        if ($row->status == ASSIGN_SUBMISSION_STATUS_SUBMITTED) {
             $url = new moodle_url('/mod/assign/view.php', array('id' => $this->assignment->get_course_module()->id,
                                 'userid' => $row->id,
                                 'action' => 'deletesubmission',
