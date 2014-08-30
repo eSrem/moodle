@@ -407,7 +407,11 @@ class assign {
             $this->process_revert_to_draft();
             $action = 'redirect';
             $nextpageparams['action'] = 'grading';
-        } else if ($action == 'unlock') {
+        } else if ($action == 'deletesubmission') {
+        	$this->process_delete_submission();
+			$action = 'redirect';
+        	$nextpageparams['action'] = 'grading';
+		} else if ($action == 'unlock') {
             $this->process_unlock_submission();
             $action = 'redirect';
             $nextpageparams['action'] = 'grading';
@@ -6603,6 +6607,61 @@ class assign {
         } else {
             return false;
         }
+    }
+
+     /**
+     * delete submission
+     * Uses url parameter userid
+     *
+     * @param int $userid
+     * @return void
+     */
+    private function process_delete_submission($userid = 0) {
+    	global $DB, $USER;
+    
+    	// Need grade permission
+    	require_capability('mod/assign:grade', $this->context);
+    	require_sesskey();
+    
+    	if (!$userid) {
+    		$userid = required_param('userid', PARAM_INT);
+    	}
+    	 
+    	$submission = $this->get_user_submission($userid, false);
+    	 
+    	if (!$submission) {
+    		return;
+    	}
+    	 
+    	// Delete submission onlinetext and file
+    	$DB->delete_records('assignsubmission_onlinetext', array('submission'=>$submission->id));
+    	$DB->delete_records('assignsubmission_file', array('submission'=>$submission->id));
+    	 
+    	// Check if there are grades
+    	$grade = $this->get_user_grade($userid, false);
+    
+    	if(!$grade) {
+    		// We don't have a grade. So we don't do anything. Somehow this in reverse doesn't work.
+    	}
+    	else {
+    		$DB->delete_records('assign_grades', array('id'=>$grade->id));
+    		$DB->delete_records('assignfeedback_file', array('grade'=>$grade->id));
+    		$DB->delete_records('assignfeedback_comments', array('grade'=>$grade->id));
+    	}
+    	 
+    	// At last, delete the submission records
+    	$DB->delete_records('assign_submission', array('id'=>$submission->id));
+    	$DB->delete_records('assign_user_mapping', array('userid'=>$userid, 'assignment'=>$this->get_instance()->id));
+    	 
+    	$user = $DB->get_record('user', array('id' => $userid), '*', MUST_EXIST);
+    	 
+    	$completion = new completion_info($this->get_course());
+    	if ($completion->is_enabled($this->get_course_module()) && $this->get_instance()->completionsubmit) {
+    		$completion->update_state($this->get_course_module(), COMPLETION_INCOMPLETE, $userid);
+    	}
+    	 
+    	$this->add_to_log('deleted submission', get_string('deletesubmissionforstudent', 'assign', array('id'=>$user->id, 'fullname'=>fullname($user))));
+    	 
     }
 
     /**
