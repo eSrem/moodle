@@ -1102,6 +1102,20 @@ class assign_grading_table extends table_sql implements renderable {
                 $description
             );
         }
+        if ($row->status == ASSIGN_SUBMISSION_STATUS_SUBMITTED) {
+            $urlparams = array('id' => $this->assignment->get_course_module()->id,
+                                'userid' => $row->id,
+                                'action' => 'deletesubmission',
+                                'sesskey' => sesskey(),
+                                'page' => $this->currpage);
+            $url = new moodle_url('/mod/assign/view.php', $urlparams);
+            $description = get_string('deletesubmission', 'assign');
+            $actions[$url->out(false)] = new action_menu_link_secondary(
+                $url,
+                $noimage,
+                $description
+            );
+        }
         if ($row->status == ASSIGN_SUBMISSION_STATUS_DRAFT &&
                 $this->assignment->get_instance()->submissiondrafts &&
                 $caneditsubmission &&

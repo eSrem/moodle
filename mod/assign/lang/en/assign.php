@@ -126,6 +126,8 @@ $string['defaultsettings'] = 'Default assignment settings';
 $string['defaultsettings_help'] = 'These settings define the defaults for all new assignments.';
 $string['defaultteam'] = 'Default group';
 $string['deleteallsubmissions'] = 'Delete all submissions';
+$string['deletesubmissionforstudent'] = 'Delete submission for student: (id={$a->id}, fullname={$a->fullname}).';
+$string['deletesubmission'] = 'Delete submission';
 $string['description'] = 'Description';
 $string['downloadall'] = 'Download all submissions';
 $string['download all submissions'] = 'Download all submissions in a zip file.';
@@ -157,6 +159,7 @@ $string['eventrevealidentitiesconfirmationpageviewed'] = 'Reveal identities conf
 $string['eventstatementaccepted'] = 'The user has accepted the statement of the submission.';
 $string['eventsubmissionconfirmationformviewed'] = 'Submission confirmation form viewed.';
 $string['eventsubmissioncreated'] = 'Submission created.';
+$string['eventsubmissiondeleted'] = 'Submission deleted';
 $string['eventsubmissionduplicated'] = 'The user duplicated his submission.';
 $string['eventsubmissionformviewed'] = 'Submission form viewed.';
 $string['eventsubmissiongraded'] = 'The submission has been graded.';
