@@ -69,6 +69,8 @@ class profile_define_base {
 
         $form->addElement('selectyesno', 'signup', get_string('profilesignup', 'admin'));
 
+        $form->addElement('selectyesno', 'signupstatic', get_string('profilesignupstatic', 'admin'));
+
         $choices = array();
         $choices[PROFILE_VISIBLE_NONE]    = get_string('profilevisiblenone', 'admin');
         $choices[PROFILE_VISIBLE_PRIVATE] = get_string('profilevisibleprivate', 'admin');

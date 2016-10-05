@@ -38,6 +38,11 @@ class profile_field_textarea extends profile_field_base {
         // Create the form field.
         $mform->addElement('editor', $this->inputname, format_string($this->field->name), null, null);
         $mform->setType($this->inputname, PARAM_RAW); // We MUST clean this before display!
+
+        // Show the description when set.
+        if($this->field->signupstatic) {
+            $mform->addElement('static', $this->field->description, get_string('description'),format_text($this->field->description));
+        }
     }
 
     /**
