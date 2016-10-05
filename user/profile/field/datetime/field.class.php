@@ -65,11 +65,6 @@ class profile_field_datetime extends profile_field_base {
 
         $mform->setType($this->inputname, PARAM_INT);
         $mform->setDefault($this->inputname, time());
-
-        // Show the description when set.
-        if($this->field->signupstatic) {
-            $mform->addElement('static', $this->field->description, get_string('description'),format_text($this->field->description));
-        }
     }
 
     /**

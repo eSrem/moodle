@@ -77,11 +77,6 @@ class profile_field_checkbox extends profile_field_base {
         if ($this->is_required() and !has_capability('moodle/user:update', context_system::instance())) {
             $mform->addRule($this->inputname, get_string('required'), 'nonzero', null, 'client');
         }
-
-        // Show the description when set.
-        if($this->field->signupstatic) {
-            $mform->addElement('static', $this->field->description, get_string('description'),format_text($this->field->description));
-        }
     }
 
     /**

@@ -89,11 +89,6 @@ class profile_field_menu extends profile_field_base {
      */
     public function edit_field_add($mform) {
         $mform->addElement('select', $this->inputname, format_string($this->field->name), $this->options);
-
-        // Show the description when set.
-        if($this->field->signupstatic) {
-            $mform->addElement('static', $this->field->description, get_string('description'),format_text($this->field->description));
-        }
     }
 
     /**

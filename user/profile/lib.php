@@ -110,6 +110,7 @@ class profile_field_base {
             $this->edit_field_add($mform);
             $this->edit_field_set_default($mform);
             $this->edit_field_set_required($mform);
+            $this->edit_field_add_description($mform);
             return true;
         }
         return false;
@@ -222,6 +223,20 @@ class profile_field_base {
         global $USER;
         if ($this->is_required() && ($this->userid == $USER->id || isguestuser())) {
             $mform->addRule($this->inputname, get_string('required'), 'required', null, 'client');
+        }
+    }
+
+    /**
+     * Adds the description field when it's needed
+     *
+     * @param moodleform $mform instance of the moodleform class
+     */
+    public function edit_field_add_description($mform) {
+        if($this->field->signupstatic) {
+            $mform->addElement('static',
+                               $this->field->description, 
+                               get_string('description'),
+                               format_text($this->field->description));
         }
     }
 
