@@ -857,6 +857,7 @@ $string['profilesforenrolledusersonly'] = 'Profiles for enrolled users only';
 $string['profileshortname'] = 'Short name (must be unique)';
 $string['profileshortnamenotunique'] = 'This short name is already in use';
 $string['profilesignup'] = 'Display on signup page?';
+$string['profiledisplaydescedit'] = 'Display description when editing user profile';
 $string['profilespecificsettings'] = 'Specific settings';
 $string['profilevisible'] = 'Who is this field visible to?';
 $string['profilevisible_help'] = '* Not visible - For private data only viewable by administrators

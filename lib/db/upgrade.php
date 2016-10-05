@@ -2299,5 +2299,19 @@ function xmldb_main_upgrade($oldversion) {
         upgrade_main_savepoint(true, 2016101401.02);
     }
 
+	if ($oldversion < 2016102000.01) {
+		// Define field component to be added to user_info_field.
+		$table = new xmldb_table('user_info_field');
+		$field = new xmldb_field('displaydescedit', XMLDB_TYPE_INT, '2', null, null, null, 0, 'signup');
+
+		// Conditionally launch add field displaydescedit.
+		if (!$dbman->field_exists($table, $field)) {
+			$dbman->add_field($table, $field);
+		}
+
+		// Main savepoint reached.
+		upgrade_main_savepoint(true, 2016102000.01);
+	}
+
     return true;
 }

@@ -1169,6 +1169,7 @@
         <FIELD NAME="visible" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Visibility: private, public, hidden"/>
         <FIELD NAME="forceunique" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="should the field contain unique data"/>
         <FIELD NAME="signup" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="display field on signup page"/>
+        <FIELD NAME="displaydescedit" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="1" SEQUENCE="false" COMMENT="display field on signup page"/>
         <FIELD NAME="defaultdata" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Default value for this field"/>
         <FIELD NAME="defaultdataformat" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
         <FIELD NAME="param1" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="General parameter field"/>
