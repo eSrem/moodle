@@ -354,6 +354,49 @@ class core_user_externallib_testcase extends externallib_advanced_testcase {
         $this->assertEquals(1, count($returnedusers));
     }
 
+    /**
+     * Test getting users by system context.
+     */
+    public function test_get_users_system_context() {
+        global $USER, $CFG, $DB;
+
+        $this->resetAfterTest(true);
+
+        // Create a course and get the role.
+        $course = self::getDataGenerator()->create_course();
+        $role = $DB->get_record('role', array('shortname' => 'student'));
+
+        // Create the users.
+        $user1 = self::getDataGenerator()->create_user();
+        $user2 = self::getDataGenerator()->create_user();
+
+        // Enrol user2.
+        $this->getDataGenerator()->enrol_user($user2->id, $course->id, $role->id);
+
+        // MDL-47783: Test sending with a new user with system capabilities.
+        $this->setUser($user1);
+        $context = context_system::instance();
+        $roleid = $this->assignUserCapability('moodle/user:viewdetails', $context->id);
+
+        // Set up the searchparams to search for user4.
+        $searchparams = array(
+            array('key' => 'email', 'value' => $user2->email),
+            array('key' => 'firstname', 'value' => $user2->firstname));
+
+        // Call the webservice.
+        $result = core_user_external::get_users($searchparams);
+
+        // We need to execute the return values cleaning process to simulate the web service server.
+        $result = external_api::clean_returnvalue(core_user_external::get_users_returns(), $result);
+
+        // Test for firstname and lastname as well as username.
+        foreach ($result['users'] as $returneduser) {
+            $this->assertEquals($user2->username, $returneduser['username']);
+            $this->assertEquals($user2->firstname, $returneduser['firstname']);
+            $this->assertEquals($user2->lastname, $returneduser['lastname']);
+        }
+    }
+
     public function get_course_user_profiles_setup($capability) {
         global $USER, $CFG;
 

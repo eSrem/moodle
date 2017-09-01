@@ -49,6 +49,7 @@ class core_userliblib_testcase extends advanced_testcase {
         $user1 = $this->getDataGenerator()->create_user();
         $user2 = $this->getDataGenerator()->create_user();
 
+        // Enrol the two users in a course.
         $course1 = $this->getDataGenerator()->create_course();
         $coursecontext = context_course::instance($course1->id);
         $teacherrole = $DB->get_record('role', array('shortname' => 'teacher'));
@@ -60,13 +61,16 @@ class core_userliblib_testcase extends advanced_testcase {
         accesslib_clear_all_caches_for_unit_testing();
 
         // Get user2 details as a user with super system capabilities.
+        $this->setAdminUser();
         $result = user_get_user_details_courses($user2);
         $this->assertEquals($user2->id, $result['id']);
         $this->assertEquals(fullname($user2), $result['fullname']);
+        $this->assertEquals($user2->firstname, $result['firstname']);
+        $this->assertEquals($user2->lastname, $result['lastname']);
         $this->assertEquals($course1->id, $result['enrolledcourses'][0]['id']);
 
-        $this->setUser($user1);
         // Get user2 details as a user who can only see this user in a course.
+        $this->setUser($user1);
         $result = user_get_user_details_courses($user2);
         $this->assertEquals($user2->id, $result['id']);
         $this->assertEquals(fullname($user2), $result['fullname']);

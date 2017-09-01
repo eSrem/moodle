@@ -611,11 +611,17 @@ function can_view_user_details_cap($user, $course = null) {
     // Check $USER has the capability to view the user details at user context.
     $usercontext = context_user::instance($user->id);
     $result = has_capability('moodle/user:viewdetails', $usercontext);
-    // Otherwise can $USER see them at course context.
-    if (!$result && !empty($course)) {
-        $context = context_course::instance($course->id);
+
+    // Otherwise can $USER see them at course or system context?
+    if (!$result) {
+        if (!empty($course)) {
+            $context = context_course::instance($course->id);
+        } else {
+            $context = context_system::instance();
+        }
         $result = has_capability('moodle/user:viewdetails', $context);
     }
+
     return $result;
 }
 
