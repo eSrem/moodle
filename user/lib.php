@@ -581,7 +581,10 @@ function user_get_user_details_courses($user) {
     $courses = enrol_get_users_courses($user->id, true);
 
     $systemprofile = false;
-    if (can_view_user_details_cap($user) || ($user->id == $USER->id) || has_coursecontact_role($user->id)) {
+    if (can_view_user_details_cap($user) || 
+            ($user->id == $USER->id) || 
+            has_coursecontact_role($user->id) || 
+            has_capability('moodle/user:viewdetails', context_system::instance()) ) {
         $systemprofile = true;
     }
 
